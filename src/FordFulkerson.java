@@ -51,18 +51,21 @@ class FordFulkerson
     // Zwracamy maksymalny przepływ z punktu s do punktu t
     int fordFulkerson(int graph[][], int s, int t)
     {
+        this.maxFlow=0;
         this.V = graph.length;
         int u, v;
 
+        //Skopiowanie macierzy
         int matrix[][] = new int[V][V];
 
         for (u = 0; u < V; u++)
             for (v = 0; v < V; v++)
                 matrix[u][v] = graph[u][v];
 
-        // Przechowujemy tutaj ścieżkę
+        // Inicjalizujemy zmienną do przechowywania ścieżki
         int path[] = new int[V];
 
+        // Inicjalizujemy zmienną do przechowywania maksymalnego przepływu
         int max_flow = 0;
 
         // Dopóki odnajdujemy przepływ - dodajemy go do naszego sumarycznego przepływu, i aktualizujemy macierz
@@ -78,14 +81,16 @@ class FordFulkerson
 
             int path_flow = Integer.MAX_VALUE;
 
-            //Sprawdzamy minimalny przepływ na ścieżce
+            // Sprawdzamy minimalny przepływ na ścieżce między kolejnymi punktami ścieżki
             for (v=t; v!=s; v=path[v])
             {
+                //System.out.print("\n"+v+" , ");
                 u = path[v];
+                //System.out.print(u+"\n");
                 path_flow = Math.min(path_flow, matrix[u][v]);
             }
 
-            //Pomniejszamy dopuszczalny przepływ na ścieżce
+            // Pomniejszamy dopuszczalny przepływ na ścieżce o min przepływ ze ścieżki
             for (v=t; v != s; v=path[v])
             {
                 u = path[v];
